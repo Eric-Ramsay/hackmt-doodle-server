@@ -1,0 +1,6 @@
+@Doodle_Cloud_Run_Server_HostAddress = http://localhost:5062
+
+GET {{Doodle_Cloud_Run_Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
