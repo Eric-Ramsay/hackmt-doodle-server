@@ -191,17 +191,17 @@ public class Players : ControllerBase
         return StatusCode(200, message);
     }
 
-   
-}
 
-[HttpPost]
-[Route("/state/word")]
-public async Task<ActionResult> CreateNewPlayer([FromBody] WordChoiceRequest body){
+    [HttpPost]
+    [Route("/state/word")]
+    public async Task<ActionResult> CreateNewPlayer([FromBody] WordChoiceRequest body){
 
-    if (body.clientId == gameState.drawerID) {
-        gameState.currentWord = body.word;
-        //gameState.StartTimestamp = DateTime.Now();
+        if (body.clientId == gameState.drawerID) {
+            gameState.currentWord = body.word;
+            //gameState.StartTimestamp = DateTime.Now();
+        }
+        
+        return StatusCode(200);
     }
-    
-    return StatusCode(200);
+
 }
