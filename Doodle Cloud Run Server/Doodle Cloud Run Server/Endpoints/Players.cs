@@ -114,7 +114,7 @@ public class Players : ControllerBase
     }
 
     [HttpGet]
-    [Route("/players/getgamestate/{index}/{chatCount}")]
+    [Route("/players/getgamestate/")]
     public async Task<ActionResult> GetGameState(string word, int chatCount)
     {
         GameStateResponse gameStateResponse = new GameStateResponse();
