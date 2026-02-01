@@ -18,6 +18,14 @@ public class Players : ControllerBase
 
     //cli.Post("/players/1") <---C++
 
+    /*send json:
+    {
+    "name": "(name)"
+    }
+    returns:
+    {
+
+    */
     [HttpPost]
     [Route("/players")]
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body){
@@ -32,6 +40,8 @@ public class Players : ControllerBase
         return StatusCode(200, response);
 
     }
+
+
     [HttpGet]
     [Route("/state/transition")]
     public async Task<ActionResult> GetRoundTransition()
