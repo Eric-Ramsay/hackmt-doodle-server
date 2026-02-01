@@ -110,7 +110,6 @@ public class Players : ControllerBase
     [Route("/players/send-drawing-data/")]
     public async Task<ActionResult> SendDrawingData( [FromBody] Actions drawingData)
     {
-        Console.WriteLine(drawingData.actions.Count);
         return StatusCode(200);
     }
 
