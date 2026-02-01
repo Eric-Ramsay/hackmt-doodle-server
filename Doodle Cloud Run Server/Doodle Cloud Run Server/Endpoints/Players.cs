@@ -30,7 +30,7 @@ public class Players : ControllerBase
     [Route("/players")]
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body){
         Client player = new Client();
-        player.clientId = gameState.players.Count;
+        player.clientId = body.name;
         player.connected = true;
         gameState.players.Add(player);
         
