@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Diagnostics;
+using System.IO;
 
 namespace Server;
 
@@ -32,24 +33,60 @@ public class Players : ControllerBase
 
     }
     [HttpGet]
-    [Route("/players/scores")]
-    public async Task<ActionResult> ListScores()
+    [Route("/state/transition")]
+    public async Task<ActionResult> GetRoundTransition()
     {
-        ListScoresResponse response = new ListScoresResponse();
+        // Pick a drawer
+        Client drawer = new Client();
+        do
+        {
+            if(gameState.turn < gameState.players.Count)
+            {
+                drawer = gameState.players[gameState.turn];
+                gameState.turn += 1;
+            } else
+            {
+                gameState.turn = 0;
+            }
+        } while (drawer.connected != true);
+        // Drawer picks word
+        TransitionResponse response = new TransitionResponse();
+        gameState.drawerId = gameState.turn - 1;
+        response.drawerId = gameState.turn - 1;
+        for (int x = 0; x < 3; x++)
+        {
+            int randomIndex = Random.Shared.Next(gameState.randomWords.Count);
+            response.chosenWords.Add(gameState.randomWords[randomIndex]);
+        }
+
         foreach (var player in gameState.players)
         {
             response.scores[player.clientId] = player.playerScore;
         }
-        return StatusCode(200, response.scores);
+
+        return StatusCode(200, response);
     }
 
-    [HttpPost]
-    [Route("/players/send-drawing-data/{drawingData}")]
-    public async Task<ActionResult> SendDrawingData(Draw drawingData)
-    {
-        return StatusCode(200);
-    }
-    
+    //[HttpPost]
+    //[Route("/state/round-start/{clientId}")]
+    //public async Task<ActionResult> RoundStart ([FromBody] RoundStartRequest body)
+    //{
+    //    RoundStartResponse response = new RoundStartResponse();
+    //    response.pickedWord = body.word;
+    //    // Censor the word for guessers
+        
+
+    //    return StatusCode(200);
+    //}
+
+
+    //[HttpPost]
+    //[Route("/players/send-drawing-data/{drawingData}")]
+    //public async Task<ActionResult> SendDrawingData(Draw drawingData)
+    //{
+    //    return StatusCode(200);
+    //}
+
     [HttpGet]
     [Route("/players/getgamestate/{index}")]
     public async Task<ActionResult> GetGameState(string word)

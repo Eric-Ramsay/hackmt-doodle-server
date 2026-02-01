@@ -26,9 +26,25 @@ public class PlayerCreateResponse
     public int clientId { get; set; }
 
 }
-public class ListScoresResponse
+
+public class RandomWordsResponse
+{
+    public List<string> chosenWords { get; set; } = new List<string>();
+}
+public class TransitionResponse
 {
     public Dictionary<int, int> scores { get; set; } = new Dictionary<int, int>();
+    public List<string> chosenWords { get; set; } = new List<string>();
+    public int drawerId { get; set; }
+
+}
+public class RoundStartResponse
+{
+    public string pickedWord { get; set;  }
+}
+public class RoundStartRequest
+{
+    public string word { get; set; }
 }
 public class GuessCreateRequest
 {
@@ -40,11 +56,25 @@ public class GuessResponse
 }
 public class GameState
 {
-    
+    public GameState()
+    {
+        string filePath = @"myWords.txt";
+        try
+        {
+            randomWords = File.ReadAllLines(filePath).ToList();
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"Error: The file '{filePath}' was not found.");
+        }
+    }
+    public List<string> randomWords { get; set; } = new List<string>();
     public int drawing { get; set; }
     public string currentWord { get; set; } = "";
     public int round { get; set;  }
     public List<Client> players { get; set; } = new List<Client>();
+    public int turn { get; set; } = 0;
+    public int drawerId { get; set; }
 
 
 
