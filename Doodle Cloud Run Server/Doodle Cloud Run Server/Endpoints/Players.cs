@@ -104,36 +104,50 @@ public class Players : ControllerBase
     }
 
     [HttpGet]
-    [Route("/players/getgamestate/{index}")]
-    public async Task<ActionResult> GetGameState(string word)
+    [Route("/players/getgamestate/{index}/{chatCount}")]
+    public async Task<ActionResult> GetGameState(string word, int chatCount)
     {
         GameStateResponse gameStateResponse = new GameStateResponse();
         gameStateResponse.drawing = gameState.drawing;
         gameStateResponse.currentWord = gameState.currentWord;
         gameStateResponse.round = gameState.round;
+        int difference = gameState.chat.Count - chatCount;
+        if (difference > 0)
+        {
+            for (int i = gameState.chat.Count-difference; i < gameState.chat.Count; i++)
+            {
+                gameStateResponse.remainingMessages.Add(gameState.chat[i]);
+            }
+        }
 
         return StatusCode(200, gameStateResponse); 
     }
 
     [HttpPost]
-    [Route("/players/guess")]
-    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body)
+    [Route("/players/guess/{userId}")]
+    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body, int userId)
     {
-        string guess = body.guess;
-        GuessResponse response = new GuessResponse();
-        if (guess == gameState.currentWord)
+        Message message = new Message(); 
+        message.guess = body.guess;
+        message.userId = userId;
+     
+        if (message.guess == gameState.currentWord)
         {
-            response.correct = true;
+            message.correct = true;
+            message.guess = " guessed the word.";
+
         }
         else
         {
-            response.correct = false;
+            message.correct = false;
+            
         }
+        gameState.chat.Add(message);
         //server updates chat based on correctness.
 
 
 
-        return StatusCode(200, response);
+        return StatusCode(200, message);
     }
 
    

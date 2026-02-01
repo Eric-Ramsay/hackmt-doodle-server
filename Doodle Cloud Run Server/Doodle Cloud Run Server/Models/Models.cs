@@ -77,6 +77,7 @@ public class GameState
     public List<Client> players { get; set; } = new List<Client>();
     public int turn { get; set; } = 0;
     public int drawerId { get; set; }
+    public List<Message> chat { get; set; } = new List<Message>();
 
 
 
@@ -86,6 +87,8 @@ public class GameStateResponse
     public int drawing { get; set; }
     public string currentWord { get; set; } = "";
     public int round { get; set; }
+    public List<Message> remainingMessages { get; set; } = new List<Message>();
+
 
 }
 
@@ -116,4 +119,11 @@ public class Points
     public Points() { }
     public int x { get; set; }
     public int y { get; set; }
+}
+public class Message
+{ 
+    public int userId { get; set;  }
+    public string guess { get; set; }
+    public bool correct { get; set;  }
+
 }
