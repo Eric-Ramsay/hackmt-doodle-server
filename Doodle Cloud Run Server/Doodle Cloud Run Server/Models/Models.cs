@@ -92,34 +92,47 @@ public class GameStateResponse
 
 }
 
-public class Draw
+public class Point
 {
-    public Draw() { }
+    public int x { get; set; }
+    public int y { get; set; }
+}
+public class Line
+{
+    public Line(Point a1, Point b1)
+    {
+        a = a1;
+        b = b1;
+    }
+    public Point a { get; set; }
+    public Point b { get; set; }
+}
 
-    public enum TOOL {
+public enum TOOL {
         ERASER,
         PENCIL,
         BUCKET
     }
-    public int brushSize { get; set; }
+public class Action
+{
+    public Line line { get; set; }
+    public TOOL tool { get; set; }
+    public int width { get; set; }
     public string color { get; set; }
-    public List<Line> points{ get; set; }
+    Action(Point a, Point b, int w, TOOL t, string c) {
+		line = new Line(a, b);
+		width = w;
+		tool = t;
+		color = c;
+	}
 
 }
 
-public class Line
+public class Actions
 {
-    public Line() { }
-    public Points a { get; set; }
-    public Points b { get; set; }
+    public List<Action> actions { get; set; } = new List<Action>();
 }
 
-public class Points
-{
-    public Points() { }
-    public int x { get; set; }
-    public int y { get; set; }
-}
 public class Message
 { 
     public int userId { get; set;  }
