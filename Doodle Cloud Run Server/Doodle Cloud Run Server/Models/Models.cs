@@ -40,7 +40,9 @@ public class TransitionResponse
 }
 public class RoundStartResponse
 {
-    public string pickedWord { get; set;  }
+    public string censoredWord { get; set; }
+    public string uncensoredWord { get; set; }
+    public int drawerId { get; set; }
 }
 public class RoundStartRequest
 {

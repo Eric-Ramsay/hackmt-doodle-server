@@ -53,7 +53,7 @@ public class Players : ControllerBase
         TransitionResponse response = new TransitionResponse();
         gameState.drawerId = gameState.turn - 1;
         response.drawerId = gameState.turn - 1;
-        for (int x = 0; x < 3; x++)
+        for (int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Shared.Next(gameState.randomWords.Count);
             response.chosenWords.Add(gameState.randomWords[randomIndex]);
@@ -67,25 +67,41 @@ public class Players : ControllerBase
         return StatusCode(200, response);
     }
 
-    //[HttpPost]
-    //[Route("/state/round-start/{clientId}")]
-    //public async Task<ActionResult> RoundStart ([FromBody] RoundStartRequest body)
-    //{
-    //    RoundStartResponse response = new RoundStartResponse();
-    //    response.pickedWord = body.word;
-    //    // Censor the word for guessers
-        
+    [HttpPost]
+    [Route("/state/round-start/{clientId}")]
+    public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, int clientId)
+    {
+        if(gameState.drawerId != clientId)
+        {
+            //Throw error here
+        }
+        RoundStartResponse response = new RoundStartResponse();
+        response.uncensoredWord = body.word;
+        response.censoredWord = "";
+        // Censor the word for guessers
+        for(int i = 0; i < response.uncensoredWord.Length; ++i)
+        {
+            if(response.uncensoredWord[i] != ' ')
+            {
+                response.censoredWord += '_';
+            }
+            else
+            {
+                response.censoredWord += response.uncensoredWord[i];
+            }
+        }
+        response.drawerId = gameState.drawerId;
 
-    //    return StatusCode(200);
-    //}
+        return StatusCode(200, response);
+    }
 
 
-    //[HttpPost]
-    //[Route("/players/send-drawing-data/{drawingData}")]
-    //public async Task<ActionResult> SendDrawingData(Draw drawingData)
-    //{
-    //    return StatusCode(200);
-    //}
+    [HttpPost]
+    [Route("/players/send-drawing-data/{drawingData}")]
+    public async Task<ActionResult> SendDrawingData(Draw drawingData)
+    {
+        return StatusCode(200);
+    }
 
     [HttpGet]
     [Route("/players/getgamestate/{index}")]
