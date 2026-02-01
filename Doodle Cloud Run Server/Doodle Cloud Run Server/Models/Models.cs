@@ -30,6 +30,14 @@ public class ListScoresResponse
 {
     public Dictionary<int, int> scores { get; set; } = new Dictionary<int, int>();
 }
+public class GuessCreateRequest
+{
+    public string guess { get; set; }
+}
+public class GuessResponse
+{
+    public bool correct { get; set; }
+}
 public class GameState
 {
     

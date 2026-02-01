@@ -24,7 +24,7 @@ public class Players : ControllerBase
         player.clientId = gameState.players.Count;
         player.connected = true;
         gameState.players.Add(player);
-
+        
         PlayerCreateResponse response = new PlayerCreateResponse();
         response.clientId = player.clientId;
 
@@ -62,5 +62,25 @@ public class Players : ControllerBase
         return StatusCode(200, gameStateResponse); 
     }
 
+    [HttpPost]
+    [Route("/players/guess")]
+    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body)
+    {
+        string guess = body.guess;
+        GuessResponse response = new GuessResponse();
+        if (guess == gameState.currentWord)
+        {
+            response.correct = true;
+        }
+        else
+        {
+            response.correct = false;
+        }
+        //server updates chat based on correctness.
+
+        return StatusCode(200, response.correct);
+    }
+
+   
 }
 
