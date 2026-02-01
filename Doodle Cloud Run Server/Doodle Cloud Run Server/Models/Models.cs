@@ -35,14 +35,14 @@ public class TransitionResponse
 {
     public Dictionary<int, int> scores { get; set; } = new Dictionary<int, int>();
     public List<string> chosenWords { get; set; } = new List<string>();
-    public int drawerId { get; set; }
+    public string drawerId { get; set; }
 
 }
 public class RoundStartResponse
 {
     public string censoredWord { get; set; }
     public string uncensoredWord { get; set; }
-    public int drawerId { get; set; }
+    public string drawerId { get; set; }
 }
 public class RoundStartRequest
 {
@@ -74,12 +74,12 @@ public class GameState
         round = 1;
     }
     public List<string> randomWords { get; set; } = new List<string>();
-    public int drawing { get; set; }
+    public string drawing { get; set; }
     public string currentWord { get; set; } = "";
     public int round { get; set;  } = 1;
     public List<Client> players { get; set; } = new List<Client>();
     public int turn { get; set; } = 0;
-    public int drawerID { get; set; }
+    public string drawerID { get; set; }
     public List<Message> chat { get; set; } = new List<Message>();
     public List<Action> actions { get; set; } = new List<Action>();
     public DateTime StartTimestamp { get; set; }
@@ -91,7 +91,7 @@ public class GameStateResponse
     public List<Action> NewActions { get; set; }
     public List<Message> NewMessages { get; set; }
     public int RoundNumber { get; set; }
-    public int drawerID { get; set; }
+    public string drawerID { get; set; }
     public string Word { get; set; }
     public int TimeRemaining { get; set; }
 }
@@ -143,12 +143,12 @@ public class Actions
 
 public class Message
 { 
-    public int userId { get; set;  }
+    public string userId { get; set;  }
     public string guess { get; set; }
     public bool correct { get; set;  }
 
 }
 public class WordChoiceRequest {
-    public int clientId { get; set; }
+    public string clientId { get; set; }
     public string word { get; set; }
 }
