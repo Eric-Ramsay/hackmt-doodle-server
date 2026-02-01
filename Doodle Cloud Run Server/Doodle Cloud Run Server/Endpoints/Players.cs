@@ -69,10 +69,10 @@ public class Players : ControllerBase
             response.chosenWords.Add(gameState.randomWords[randomIndex]);
         }
 
-        foreach (var player in gameState.players)
+        /*foreach (var player in gameState.players)
         {
             response.scores[player.clientId] = player.playerScore;
-        }
+        }*/
 
         return StatusCode(200, response);
     }
@@ -81,10 +81,10 @@ public class Players : ControllerBase
     [Route("/state/round-start/{clientId}")]
     public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, string clientId)
     {
-        if(gameState.drawerID != clientId)
+        /*if(gameState.drawerID != clientId)
         {
             //Throw error here
-        }
+        }*/
         RoundStartResponse response = new RoundStartResponse();
         response.uncensoredWord = body.word;
         gameState.currentWord = body.word;
