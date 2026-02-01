@@ -16,16 +16,6 @@ public class Players : ControllerBase
         gameState = new GameState();
     }
 
-    //cli.Post("/players/1") <---C++
-
-    /*send json:
-    {
-    "name": "(name)"
-    }
-    returns:
-    {
-
-    */
     [HttpPost]
     [Route("/players")]
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body){
