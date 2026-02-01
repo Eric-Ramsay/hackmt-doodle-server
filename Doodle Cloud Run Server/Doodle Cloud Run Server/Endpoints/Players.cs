@@ -166,8 +166,8 @@ public class Players : ControllerBase
     }
 
     [HttpPost]
-    [Route("/players/guess/")]
-    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body)
+    [Route("/players/guess/{clientId}")]
+    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body, string clientId)
     {
         Message message = new Message(); 
         message.guess = body.guess;
@@ -184,6 +184,7 @@ public class Players : ControllerBase
             message.correct = false;
             
         }
+        message.userId = clientId;
         gameState.chat.Add(message);
         //server updates chat based on correctness.
 
