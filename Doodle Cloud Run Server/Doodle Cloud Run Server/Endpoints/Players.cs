@@ -79,7 +79,7 @@ public class Players : ControllerBase
 
     [HttpPost]
     [Route("/state/round-start/{clientId}")]
-    public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, int clientId)
+    public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, string clientId)
     {
         if(gameState.drawerID != clientId)
         {
@@ -120,7 +120,7 @@ public class Players : ControllerBase
 
     [HttpGet]
     [Route("/players/getgamestate/{userID}/{actionCount}/{chatCount}")]
-    public async Task<ActionResult> GetGameState(int userID, int actionCount, int chatCount)
+    public async Task<ActionResult> GetGameState(string userID, int actionCount, int chatCount)
     {
         GameStateResponse response = new GameStateResponse();
 
