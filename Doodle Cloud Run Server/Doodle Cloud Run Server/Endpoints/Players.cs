@@ -12,10 +12,12 @@ public class Players : ControllerBase
 
     }
 
+    //cli.Post("/players/1") <---C++
+
     [HttpPost]
     [Route("/players/{clientId}")]
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body, string clientId){
-        Player player = new Player();
+        Models player = new Models();
 
         player.clientId = clientId;
         player.name = body.data;
@@ -23,4 +25,28 @@ public class Players : ControllerBase
         return StatusCode(200);
 
     }
+    [HttpPost]
+    [Route("/players/sendword/{word}")]
+    public async Task<ActionResult> SendWord(string word)
+    {
+        return StatusCode(200);
+    }
+
+    [HttpPost]
+    [Route("/players/send-drawing-data/{drawingData}")]
+    public async Task<ActionResult> SendDrawingData(Draw drawingData)
+    {
+        return StatusCode(200);
+    }
+
+
+    [HttpGet]
+    [Route("/players/getgamestate/")]
+    public async Task<ActionResult> GetGameState()
+    {
+        GameState gameState = new GameState();
+        return StatusCode(200, gameState); 
+    }
+
 }
+
