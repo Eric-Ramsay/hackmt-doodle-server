@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Doodle_Cloud_Run_Server</RootNamespace>
+    <AssemblyName>DoodleCloudRunServer</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
