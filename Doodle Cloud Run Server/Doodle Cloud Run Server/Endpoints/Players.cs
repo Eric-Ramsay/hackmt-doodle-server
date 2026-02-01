@@ -77,6 +77,7 @@ public class Players : ControllerBase
         }
         RoundStartResponse response = new RoundStartResponse();
         response.uncensoredWord = body.word;
+        gameState.currentWord = body.word;
         response.censoredWord = "";
         // Censor the word for guessers
         for(int i = 0; i < response.uncensoredWord.Length; ++i)
@@ -94,7 +95,6 @@ public class Players : ControllerBase
 
         return StatusCode(200, response);
     }
-
 
     [HttpPost]
     [Route("/players/send-drawing-data/{drawingData}")]
@@ -130,6 +130,8 @@ public class Players : ControllerBase
             response.correct = false;
         }
         //server updates chat based on correctness.
+
+
 
         return StatusCode(200, response);
     }
