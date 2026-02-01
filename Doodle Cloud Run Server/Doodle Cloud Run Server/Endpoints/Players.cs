@@ -61,8 +61,8 @@ public class Players : ControllerBase
         } while (drawer.connected != true);
         // Drawer picks word
         TransitionResponse response = new TransitionResponse();
-        gameState.drawerID = gameState.turn - 1;
-        response.drawerId = gameState.turn - 1;
+        gameState.drawerID = gameState.players[gameState.turn - 1].clientId;
+        response.drawerId = gameState.players[gameState.turn - 1].clientId;
         for (int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Shared.Next(gameState.randomWords.Count);
