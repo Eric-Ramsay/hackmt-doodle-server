@@ -32,14 +32,20 @@ public class ListScoresResponse
 }
 public class GameState
 {
-    public GameState() {   }
     
-    public string drawing { get; set; }
-    public string currentWord { get; set; }
+    public int drawing { get; set; }
+    public string currentWord { get; set; } = "";
     public int round { get; set;  }
     public List<Client> players { get; set; } = new List<Client>();
 
 
+
+}
+public class GameStateResponse
+{
+    public int drawing { get; set; }
+    public string currentWord { get; set; } = "";
+    public int round { get; set; }
 
 }
 

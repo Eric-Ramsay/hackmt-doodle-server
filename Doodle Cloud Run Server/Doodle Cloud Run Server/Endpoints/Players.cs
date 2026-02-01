@@ -49,15 +49,17 @@ public class Players : ControllerBase
     {
         return StatusCode(200);
     }
-
-    // POST Guess
-
+    
     [HttpGet]
-    [Route("/players/getgamestate/{index}")]
-    public async Task<ActionResult> GetGameState(string)
+    [Route("/state/{index}")]
+    public async Task<ActionResult> GetGameState(string index)
     {
-        GameState gameState = new GameState();
-        return StatusCode(200, gameState); 
+        GameStateResponse gameStateResponse = new GameStateResponse();
+        gameStateResponse.drawing = gameState.drawing;
+        gameStateResponse.currentWord = gameState.currentWord;
+        gameStateResponse.round = gameState.round;
+
+        return StatusCode(200, gameStateResponse); 
     }
 
 }
