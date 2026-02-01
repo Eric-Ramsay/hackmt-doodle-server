@@ -135,7 +135,7 @@ public class Players : ControllerBase
     }
 
     [HttpPost]
-    [Route("/players/guess/{userId}")]
+    [Route("/players/guess/")]
     public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body, int userId)
     {
         Message message = new Message(); 
