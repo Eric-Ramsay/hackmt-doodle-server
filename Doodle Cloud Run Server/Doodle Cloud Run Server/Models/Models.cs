@@ -3,7 +3,7 @@
 public class Client
 {
     public string name { get; set; }
-    public int clientId { get; set; 
+    public string clientId { get; set; 
     
     }
     public int playerScore{ get; set;
@@ -23,7 +23,7 @@ public class PlayerCreateRequest
 
 public class PlayerCreateResponse
 {
-    public int clientId { get; set; }
+    public string clientId { get; set; }
 
 }
 
