@@ -2,37 +2,45 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Diagnostics;
 
 namespace Server;
 
 [Route("api/")]
 public class Players : ControllerBase
 {
-    public Players()
+    private static GameState gameState;
+    static Players()
     {
-
+        gameState = new GameState();
     }
 
     //cli.Post("/players/1") <---C++
 
     [HttpPost]
-    [Route("/players/{clientId}")]
-    public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body, string clientId){
-        Models player = new Models();
+    [Route("/players")]
+    public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body){
+        Client player = new Client();
+        player.clientId = gameState.players.Count;
+        player.connected = true;
+        gameState.players.Add(player);
 
-        Console.Write(string.Format("client id: {0} data: {1}\n", clientId, body.name));
+        PlayerCreateResponse response = new PlayerCreateResponse();
+        response.clientId = player.clientId;
 
-        player.clientId = body.clientId;
-        player.name = body.name;
-
-        return StatusCode(200);
+        return StatusCode(200, response);
 
     }
-    [HttpPost]
-    [Route("/players/sendword/{word}")]
-    public async Task<ActionResult> SendWord(string word)
+    [HttpGet]
+    [Route("/players/scores")]
+    public async Task<ActionResult> ListScores()
     {
-        return StatusCode(200);
+        ListScoresResponse response = new ListScoresResponse();
+        foreach (var player in gameState.players)
+        {
+            response.scores[player.clientId] = player.playerScore;
+        }
+        return StatusCode(200, response.scores);
     }
 
     [HttpPost]
@@ -42,10 +50,11 @@ public class Players : ControllerBase
         return StatusCode(200);
     }
 
+    // POST Guess
 
     [HttpGet]
-    [Route("/players/getgamestate/")]
-    public async Task<ActionResult> GetGameState()
+    [Route("/players/getgamestate/{index}")]
+    public async Task<ActionResult> GetGameState(string)
     {
         GameState gameState = new GameState();
         return StatusCode(200, gameState); 

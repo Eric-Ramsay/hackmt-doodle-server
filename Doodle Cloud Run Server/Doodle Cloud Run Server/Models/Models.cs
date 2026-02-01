@@ -1,14 +1,9 @@
 ﻿namespace Server;
 
-public class Models
+public class Client
 {
-    public Models()
-    {
-
-    }
-
     public string name { get; set; }
-    public string clientId { get; set; 
+    public int clientId { get; set; 
     
     }
     public int playerScore{ get; set;
@@ -22,14 +17,19 @@ public class Models
 
 public class PlayerCreateRequest
 {
-    public PlayerCreateRequest() { }
-
-    public string clientId { get; set; }
     public string name { get; set; }
-    public Models playerData { get; set; }
-    public List<Models> players { get; set; }
+ 
 }
 
+public class PlayerCreateResponse
+{
+    public int clientId { get; set; }
+
+}
+public class ListScoresResponse
+{
+    public Dictionary<int, int> scores { get; set; } = new Dictionary<int, int>();
+}
 public class GameState
 {
     public GameState() {   }
@@ -37,7 +37,8 @@ public class GameState
     public string drawing { get; set; }
     public string currentWord { get; set; }
     public int round { get; set;  }
-    public List<Models> players { get; set; }
+    public List<Client> players { get; set; } = new List<Client>();
+
 
 
 }
