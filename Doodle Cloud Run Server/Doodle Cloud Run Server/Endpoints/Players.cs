@@ -134,7 +134,7 @@ public class Players : ControllerBase
         }
         if (gameState.chat != null && chatCount <= gameState.chat.Count)
         {
-            response.NewMessages = gameState.chat.GetRange(chatCount, gameState.actions.Count - chatCount);
+            response.NewMessages = gameState.chat.GetRange(chatCount, gameState.chat.Count - chatCount);
         }
 
         return StatusCode(200, response);
@@ -167,11 +167,11 @@ public class Players : ControllerBase
 
     [HttpPost]
     [Route("/players/guess/")]
-    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body, int userId)
+    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body)
     {
         Message message = new Message(); 
         message.guess = body.guess;
-        message.userId = userId;
+        //message.userId = userId;
      
         if (message.guess == gameState.currentWord)
         {
