@@ -108,7 +108,7 @@ public class Players : ControllerBase
 
     [HttpPost]
     [Route("/players/send-drawing-data/")]
-    public async Task<ActionResult> SendDrawingData(Actions drawingData)
+    public async Task<ActionResult> SendDrawingData( [FromBody] Actions drawingData)
     {
         Console.WriteLine(drawingData.actions.Count);
         return StatusCode(200);

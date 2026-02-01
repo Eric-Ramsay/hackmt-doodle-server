@@ -94,11 +94,13 @@ public class GameStateResponse
 
 public class Point
 {
+    public Point() { }
     public int x { get; set; }
     public int y { get; set; }
 }
 public class Line
 {
+    public Line() { }
     public Line(Point a1, Point b1)
     {
         a = a1;
@@ -119,7 +121,9 @@ public class Action
     public TOOL tool { get; set; }
     public int width { get; set; }
     public string color { get; set; }
-    Action(Point a, Point b, int w, TOOL t, string c) {
+        public Action() { }
+
+        public Action(Point a, Point b, int w, TOOL t, string c) {
 		line = new Line(a, b);
 		width = w;
 		tool = t;
