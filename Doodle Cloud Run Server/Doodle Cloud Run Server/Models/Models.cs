@@ -69,16 +69,19 @@ public class GameState
         {
             Console.WriteLine($"Error: The file '{filePath}' was not found.");
         }
+        chat = new List<Message>(); 
+        actions = new List<Action>();
+        round = 1;
     }
     public List<string> randomWords { get; set; } = new List<string>();
     public int drawing { get; set; }
     public string currentWord { get; set; } = "";
-    public int round { get; set;  }
+    public int round { get; set;  } = 1;
     public List<Client> players { get; set; } = new List<Client>();
     public int turn { get; set; } = 0;
     public int drawerID { get; set; }
     public List<Message> chat { get; set; } = new List<Message>();
-    public List<Action> actions { get; set; }
+    public List<Action> actions { get; set; } = new List<Action>();
     public DateTime StartTimestamp { get; set; }
 
 
@@ -90,7 +93,7 @@ public class GameStateResponse
     public int RoundNumber { get; set; }
     public int drawerID { get; set; }
     public string Word { get; set; }
-    public string TimeRemaining { get; set; }
+    public int TimeRemaining { get; set; }
 }
 
 public class Point

@@ -127,11 +127,12 @@ public class Players : ControllerBase
         response.RoundNumber = gameState.round;
         response.Word = gameState.currentWord;
         response.drawerID = gameState.drawerID;
-        if (gameState.actions != null && actionCount < gameState.actions.Count)
+        response.TimeRemaining = 60;
+        if (gameState.actions != null && actionCount <= gameState.actions.Count)
         {
             response.NewActions = gameState.actions.GetRange(actionCount, gameState.actions.Count - actionCount);
         }
-        if (gameState.chat != null && chatCount < gameState.chat.Count)
+        if (gameState.chat != null && chatCount <= gameState.chat.Count)
         {
             response.NewMessages = gameState.chat.GetRange(chatCount, gameState.actions.Count - chatCount);
         }
