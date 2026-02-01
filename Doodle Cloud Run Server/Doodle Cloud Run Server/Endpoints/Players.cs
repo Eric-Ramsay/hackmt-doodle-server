@@ -51,8 +51,8 @@ public class Players : ControllerBase
     }
     
     [HttpGet]
-    [Route("/state/{index}")]
-    public async Task<ActionResult> GetGameState(string index)
+    [Route("/players/getgamestate/{index}")]
+    public async Task<ActionResult> GetGameState(string word)
     {
         GameStateResponse gameStateResponse = new GameStateResponse();
         gameStateResponse.drawing = gameState.drawing;
@@ -78,7 +78,7 @@ public class Players : ControllerBase
         }
         //server updates chat based on correctness.
 
-        return StatusCode(200, response.correct);
+        return StatusCode(200, response);
     }
 
    

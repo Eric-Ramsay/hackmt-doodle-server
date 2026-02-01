@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doodle Cloud Run Server", "Doodle Cloud Run Server", "{AFB124F6-7F6C-2F62-00E8-3DDC63845303}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doodle Cloud Run Server", "Doodle Cloud Run Server\Doodle Cloud Run Server\Doodle Cloud Run Server.csproj", "{A27C132D-655B-C441-728C-A39BCDAB5CEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A27C132D-655B-C441-728C-A39BCDAB5CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A27C132D-655B-C441-728C-A39BCDAB5CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A27C132D-655B-C441-728C-A39BCDAB5CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A27C132D-655B-C441-728C-A39BCDAB5CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A27C132D-655B-C441-728C-A39BCDAB5CEB} = {AFB124F6-7F6C-2F62-00E8-3DDC63845303}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41BDADD6-D70F-435D-87E5-53199DF14683}
+	EndGlobalSection
+EndGlobal
