@@ -61,7 +61,7 @@ public class Players : ControllerBase
         } while (drawer.connected != true);
         // Drawer picks word
         TransitionResponse response = new TransitionResponse();
-        gameState.drawerId = gameState.turn - 1;
+        gameState.drawerID = gameState.turn - 1;
         response.drawerId = gameState.turn - 1;
         for (int i = 0; i < 3; i++)
         {
@@ -81,7 +81,7 @@ public class Players : ControllerBase
     [Route("/state/round-start/{clientId}")]
     public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, int clientId)
     {
-        if(gameState.drawerId != clientId)
+        if(gameState.drawerID != clientId)
         {
             //Throw error here
         }
@@ -101,7 +101,7 @@ public class Players : ControllerBase
                 response.censoredWord += response.uncensoredWord[i];
             }
         }
-        response.drawerId = gameState.drawerId;
+        response.drawerId = gameState.drawerID;
 
         return StatusCode(200, response);
     }
@@ -113,24 +113,41 @@ public class Players : ControllerBase
         return StatusCode(200);
     }
 
-    [HttpGet]
-    [Route("/players/getgamestate/")]
-    public async Task<ActionResult> GetGameState(string word, int chatCount)
+    public string HideWord(string startWord)
     {
-        GameStateResponse gameStateResponse = new GameStateResponse();
-        gameStateResponse.drawing = gameState.drawing;
-        gameStateResponse.currentWord = gameState.currentWord;
-        gameStateResponse.round = gameState.round;
-        int difference = gameState.chat.Count - chatCount;
-        if (difference > 0)
+        return startWord;
+    }
+
+    [HttpGet]
+    [Route("/players/getgamestate/{userID}/{actionCount}/{chatCount}")]
+    public async Task<GameStateResponse> GetGameState(int userID, int actionCount, int chatCount)
+    {
+        GameStateResponse response = new GameStateResponse();
+
+        if ((DateTime.Now - gameState.StartTimestamp).TotalSeconds >= 60)
         {
-            for (int i = gameState.chat.Count-difference; i < gameState.chat.Count; i++)
+            gameState.StartTimestamp = DateTime.Now;
+            gameState.round++;
+            gameState.actions.Clear();
+            gameState.chat.Clear();
+            // pick new word, add to gamestate
+            // give users what they're missing
+            // pick new guesser
+            // send guesser info
+            // send non-guesser info
+        }
+        else
+        {
+            if (userID == gameState.drawerID)
             {
-                gameStateResponse.remainingMessages.Add(gameState.chat[i]);
+                // see if user is guesser
+                //if guesser
+
+                // else
             }
         }
 
-        return StatusCode(200, gameStateResponse); 
+        return response;
     }
 
     [HttpPost]
