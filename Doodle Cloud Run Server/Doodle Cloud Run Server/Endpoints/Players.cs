@@ -120,11 +120,25 @@ public class Players : ControllerBase
 
     [HttpGet]
     [Route("/players/getgamestate/{userID}/{actionCount}/{chatCount}")]
-    public async Task<GameStateResponse> GetGameState(int userID, int actionCount, int chatCount)
+    public async Task<ActionResult> GetGameState(int userID, int actionCount, int chatCount)
     {
         GameStateResponse response = new GameStateResponse();
 
-        if ((DateTime.Now - gameState.StartTimestamp).TotalSeconds >= 60)
+        response.RoundNumber = gameState.round;
+        response.Word = gameState.currentWord;
+        response.drawerID = gameState.drawerID;
+        if (actionCount < gameState.actions.Count)
+        {
+            response.NewActions = gameState.actions.GetRange(actionCount, gameState.actions.Count - actionCount);
+        }
+        if (chatCount < gameState.chat.Count)
+        {
+            response.NewMessages = gameState.chat.GetRange(chatCount, gameState.actions.Count - chatCount);
+        }
+
+        return StatusCode(200, response);
+
+        /*if ((DateTime.Now - gameState.StartTimestamp).TotalSeconds >= 60)
         {
             gameState.StartTimestamp = DateTime.Now;
             gameState.round++;
@@ -145,9 +159,9 @@ public class Players : ControllerBase
 
                 // else
             }
-        }
+        }*/
 
-        return response;
+        //return response;
     }
 
     [HttpPost]
@@ -180,3 +194,14 @@ public class Players : ControllerBase
    
 }
 
+[HttpPost]
+[Route("/state/word")]
+public async Task<ActionResult> CreateNewPlayer([FromBody] WordChoiceRequest body){
+
+    if (body.clientId == gameState.drawerID) {
+        gameState.currentWord = body.word;
+        //gameState.StartTimestamp = DateTime.Now();
+    }
+    
+    return StatusCode(200);
+}

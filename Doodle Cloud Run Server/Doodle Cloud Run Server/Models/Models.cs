@@ -86,9 +86,9 @@ public class GameState
 public class GameStateResponse
 {
     public List<Action> NewActions { get; set; }
-    public List<Action> NewMessages { get; set; }
+    public List<Message> NewMessages { get; set; }
     public int RoundNumber { get; set; }
-    public int GuesserId { get; set; }
+    public int drawerID { get; set; }
     public string Word { get; set; }
     public string TimeRemaining { get; set; }
 }
@@ -144,4 +144,8 @@ public class Message
     public string guess { get; set; }
     public bool correct { get; set;  }
 
+}
+public class WordChoiceRequest {
+    public int clientId { get; set; }
+    public string word { get; set; }
 }
