@@ -18,6 +18,7 @@ var app = builder.Build();
 // Debug root endpoint
 app.MapGet("/", () => $"Hello {target}!");
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
