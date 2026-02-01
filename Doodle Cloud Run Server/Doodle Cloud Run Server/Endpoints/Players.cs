@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Server;
@@ -19,8 +20,10 @@ public class Players : ControllerBase
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body, string clientId){
         Models player = new Models();
 
-        player.clientId = clientId;
-        player.name = body.data;
+        Console.Write(string.Format("client id: {0} data: {1}\n", clientId, body.name));
+
+        player.clientId = body.clientId;
+        player.name = body.name;
 
         return StatusCode(200);
 

@@ -24,7 +24,8 @@ public class PlayerCreateRequest
 {
     public PlayerCreateRequest() { }
 
-    public string data { get; set; }
+    public string clientId { get; set; }
+    public string name { get; set; }
     public Models playerData { get; set; }
     public List<Models> players { get; set; }
 }
