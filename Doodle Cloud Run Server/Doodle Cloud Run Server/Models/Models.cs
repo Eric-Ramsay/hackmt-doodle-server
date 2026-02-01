@@ -76,44 +76,72 @@ public class GameState
     public int round { get; set;  }
     public List<Client> players { get; set; } = new List<Client>();
     public int turn { get; set; } = 0;
-    public int drawerId { get; set; }
-
+    public int drawerID { get; set; }
+    public List<Message> chat { get; set; } = new List<Message>();
+    public List<Action> actions { get; set; }
+    public DateTime StartTimestamp { get; set; }
 
 
 }
 public class GameStateResponse
 {
-    public int drawing { get; set; }
-    public string currentWord { get; set; } = "";
-    public int round { get; set; }
-
+    public List<Action> NewActions { get; set; }
+    public List<Action> NewMessages { get; set; }
+    public int RoundNumber { get; set; }
+    public int GuesserId { get; set; }
+    public string Word { get; set; }
+    public string TimeRemaining { get; set; }
 }
 
-public class Draw
+public class Point
 {
-    public Draw() { }
+    public Point() { }
+    public int x { get; set; }
+    public int y { get; set; }
+}
+public class Line
+{
+    public Line() { }
+    public Line(Point a1, Point b1)
+    {
+        a = a1;
+        b = b1;
+    }
+    public Point a { get; set; }
+    public Point b { get; set; }
+}
 
-    public enum TOOL {
+public enum TOOL {
         ERASER,
         PENCIL,
         BUCKET
     }
-    public int brushSize { get; set; }
+public class Action
+{
+    public Line line { get; set; }
+    public TOOL tool { get; set; }
+    public int width { get; set; }
     public string color { get; set; }
-    public List<Line> points{ get; set; }
+        public Action() { }
+
+        public Action(Point a, Point b, int w, TOOL t, string c) {
+		line = new Line(a, b);
+		width = w;
+		tool = t;
+		color = c;
+	}
 
 }
 
-public class Line
+public class Actions
 {
-    public Line() { }
-    public Points a { get; set; }
-    public Points b { get; set; }
+    public List<Action> actions { get; set; } = new List<Action>();
 }
 
-public class Points
-{
-    public Points() { }
-    public int x { get; set; }
-    public int y { get; set; }
+public class Message
+{ 
+    public int userId { get; set;  }
+    public string guess { get; set; }
+    public bool correct { get; set;  }
+
 }

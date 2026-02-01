@@ -18,6 +18,14 @@ public class Players : ControllerBase
 
     //cli.Post("/players/1") <---C++
 
+    /*send json:
+    {
+    "name": "(name)"
+    }
+    returns:
+    {
+
+    */
     [HttpPost]
     [Route("/players")]
     public async Task<ActionResult> CreateNewPlayer([FromBody] PlayerCreateRequest body){
@@ -32,6 +40,8 @@ public class Players : ControllerBase
         return StatusCode(200, response);
 
     }
+
+
     [HttpGet]
     [Route("/state/transition")]
     public async Task<ActionResult> GetRoundTransition()
@@ -51,7 +61,7 @@ public class Players : ControllerBase
         } while (drawer.connected != true);
         // Drawer picks word
         TransitionResponse response = new TransitionResponse();
-        gameState.drawerId = gameState.turn - 1;
+        gameState.drawerID = gameState.turn - 1;
         response.drawerId = gameState.turn - 1;
         for (int i = 0; i < 3; i++)
         {
@@ -71,7 +81,7 @@ public class Players : ControllerBase
     [Route("/state/round-start/{clientId}")]
     public async Task<ActionResult> RoundStart([FromBody] RoundStartRequest body, int clientId)
     {
-        if(gameState.drawerId != clientId)
+        if(gameState.drawerID != clientId)
         {
             //Throw error here
         }
@@ -91,49 +101,80 @@ public class Players : ControllerBase
                 response.censoredWord += response.uncensoredWord[i];
             }
         }
-        response.drawerId = gameState.drawerId;
+        response.drawerId = gameState.drawerID;
 
         return StatusCode(200, response);
     }
 
     [HttpPost]
-    [Route("/players/send-drawing-data/{drawingData}")]
-    public async Task<ActionResult> SendDrawingData(Draw drawingData)
+    [Route("/players/send-drawing-data/")]
+    public async Task<ActionResult> SendDrawingData( [FromBody] Actions drawingData)
     {
         return StatusCode(200);
     }
 
-    [HttpGet]
-    [Route("/players/getgamestate/{index}")]
-    public async Task<ActionResult> GetGameState(string word)
+    public string HideWord(string startWord)
     {
-        GameStateResponse gameStateResponse = new GameStateResponse();
-        gameStateResponse.drawing = gameState.drawing;
-        gameStateResponse.currentWord = gameState.currentWord;
-        gameStateResponse.round = gameState.round;
-
-        return StatusCode(200, gameStateResponse); 
+        return startWord;
     }
 
-    [HttpPost]
-    [Route("/players/guess")]
-    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body)
+    [HttpGet]
+    [Route("/players/getgamestate/{userID}/{actionCount}/{chatCount}")]
+    public async Task<GameStateResponse> GetGameState(int userID, int actionCount, int chatCount)
     {
-        string guess = body.guess;
-        GuessResponse response = new GuessResponse();
-        if (guess == gameState.currentWord)
+        GameStateResponse response = new GameStateResponse();
+
+        if ((DateTime.Now - gameState.StartTimestamp).TotalSeconds >= 60)
         {
-            response.correct = true;
+            gameState.StartTimestamp = DateTime.Now;
+            gameState.round++;
+            gameState.actions.Clear();
+            gameState.chat.Clear();
+            // pick new word, add to gamestate
+            // give users what they're missing
+            // pick new guesser
+            // send guesser info
+            // send non-guesser info
         }
         else
         {
-            response.correct = false;
+            if (userID == gameState.drawerID)
+            {
+                // see if user is guesser
+                //if guesser
+
+                // else
+            }
         }
+
+        return response;
+    }
+
+    [HttpPost]
+    [Route("/players/guess/")]
+    public async Task<ActionResult> getGuess([FromBody] GuessCreateRequest body, int userId)
+    {
+        Message message = new Message(); 
+        message.guess = body.guess;
+        message.userId = userId;
+     
+        if (message.guess == gameState.currentWord)
+        {
+            message.correct = true;
+            message.guess = " guessed the word.";
+
+        }
+        else
+        {
+            message.correct = false;
+            
+        }
+        gameState.chat.Add(message);
         //server updates chat based on correctness.
 
 
 
-        return StatusCode(200, response);
+        return StatusCode(200, message);
     }
 
    
